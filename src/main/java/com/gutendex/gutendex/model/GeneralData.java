@@ -1,9 +1,14 @@
 package com.gutendex.gutendex.model;
 
 
+import com.fasterxml.jackson.annotation.JsonAlias;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.List;
 
-public record BooksData(
-        List<BooksD>
+@JsonIgnoreProperties(ignoreUnknown = true)
+public record GeneralData(
+        @JsonAlias("results")
+        List<BooksData> listOfBooks
 ) {
 }
