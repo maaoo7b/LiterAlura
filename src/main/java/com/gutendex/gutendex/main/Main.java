@@ -1,9 +1,12 @@
 package com.gutendex.gutendex.main;
 
+import com.gutendex.gutendex.model.Book;
 import com.gutendex.gutendex.model.GeneralData;
 import com.gutendex.gutendex.service.APIConsumption;
 import com.gutendex.gutendex.service.ConvertData;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class Main {
@@ -20,11 +23,12 @@ public class Main {
         var option = -1;
         var menu = """
                 1) Search book by title
+                2) Show all books
                 0) Exit
                 """;
         while (option != 0) {
             System.out.println(menu);
-            option=sc.nextInt();
+            option = sc.nextInt();
             sc.nextLine();
             switch (option) {
                 case 1:
