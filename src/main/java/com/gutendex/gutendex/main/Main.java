@@ -1,13 +1,16 @@
 package com.gutendex.gutendex.main;
 
 import com.gutendex.gutendex.model.Book;
+import com.gutendex.gutendex.model.BooksData;
 import com.gutendex.gutendex.model.GeneralData;
 import com.gutendex.gutendex.service.APIConsumption;
 import com.gutendex.gutendex.service.ConvertData;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -15,6 +18,8 @@ public class Main {
     private APIConsumption apiConsumption = new APIConsumption();
     private final String BASE_URL = "https://gutendex.com/books/";
     private ConvertData converter = new ConvertData();
+
+    List<BooksData> booksDataList = new ArrayList<>();
 
 
     public void startApp() {
@@ -34,6 +39,9 @@ public class Main {
                 case 1:
                     searchBookByTitle();
                     break;
+                case 2:
+                    saveBook();
+                    break;
                 case 0:
                     System.out.println("Exiting app, bye!!!");
                     break;
@@ -48,5 +56,16 @@ public class Main {
         System.out.println(json);
         var data = converter.getData(json, GeneralData.class);
         System.out.println(data);
+        booksDataList.add(data.listOfBooks().get(0));
+
+        //SPRING DATA & JPA - VÍDEO 5
+    }
+
+    private void saveBook() {
+        List<Book> booksList = new ArrayList<>();
+        booksList = booksDataList.stream().map(book -> new Book(book)).toList();
+
+        booksList.stream().sorted(Comparator.comparing(Book::getDownloads)).forEach(System.out::println);
+
     }
 }
